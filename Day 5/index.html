@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple CSS Modal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Hidden checkbox to toggle modal -->
+  <input type="checkbox" id="modal-toggle">
+
+  <!-- Button to open modal -->
+  <label for="modal-toggle" class="open-modal">Click Me!</label>
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-content">
+      <label for="modal-toggle" class="close-modal">X</label>
+      <h2>Modal Popup</h2>
+      <p>This is a simple modal using only CSS.</p>
+    </div>
+  </div>
+
+</body>
+</html>
