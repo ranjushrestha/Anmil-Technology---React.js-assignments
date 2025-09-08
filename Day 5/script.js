@@ -20,7 +20,7 @@ const totalAge = student.reduce((sum, s) => sum + s.age, 0);
 const meanAge = totalAge / student.length;
 console.log("2. Average Age: " + meanAge.toFixed(1));
 
-// 3. Check if every student belongs to Gen Z using conditional loop
+// 3. Check if every student belongs to Gen Z 
 const currentYear = new Date().getFullYear();
 let allGenZ = true;
 
