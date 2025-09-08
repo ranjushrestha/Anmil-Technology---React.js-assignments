@@ -20,15 +20,19 @@ const totalAge = student.reduce((sum, s) => sum + s.age, 0);
 const meanAge = totalAge / student.length;
 console.log("2. Average Age: " + meanAge.toFixed(1));
 
-// 3. Check if every student belongs to Gen Z 
+// 3. Check if every student belongs to Gen Z using conditional loop
 const currentYear = new Date().getFullYear();
-const nonGenZ = student.filter(s => {
-    const birthYear = currentYear - s.age;
-    return birthYear < 1997 || birthYear > 2012;
-});
+let allGenZ = true;
 
-console.log(nonGenZ.length === 0 ? "3. Every student is Gen Z." : "3. Not every student is Gen Z.");
+for (let i = 0; i < student.length; i++) {
+    const birthYear = currentYear - student[i].age;
+    if (birthYear < 1997 || birthYear > 2012) {
+        allGenZ = false;
+        break;
+    }
+}
 
+console.log(allGenZ ? "3. Every student is Gen Z." : "3. Not every student is Gen Z.");
 
 // 4. Get only Gen Z students
 const genZStudents = student
@@ -37,6 +41,5 @@ const genZStudents = student
         return birthYear >= 1997 && birthYear <= 2012;
     })
     .map(s => s.fullName);
+
 console.log("4. Gen Z Students: " + JSON.stringify(genZStudents));
-
-
