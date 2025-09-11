@@ -22,6 +22,7 @@
       width: 70%;
       border: 1px solid #ccc;
       border-radius: 5px;
+      margin-top: 30px;
     }
     button {
       padding: 8px 12px;
@@ -36,7 +37,7 @@
     button.delete { background: #dc3545; color: white; }
     table {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 30px;
       border-collapse: collapse;
     }
     th, td {
