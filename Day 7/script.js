@@ -8,7 +8,6 @@ const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
 // Load from localStorage
 let emails = JSON.parse(localStorage.getItem("emails")) || [];
 
-// Render emails
 function renderEmails() {
   emailList.innerHTML = "";
   emails.forEach((email, index) => {
@@ -16,7 +15,7 @@ function renderEmails() {
     row.innerHTML = `
       <td>${email}</td>
       <td>
-        <button class="edit" onclick="editEmail(${index})">Edit</button>
+        <button class="edit" onclick="startEdit(${index})">Edit</button>
         <button class="delete" onclick="deleteEmail(${index})">Delete</button>
       </td>
     `;
@@ -24,7 +23,6 @@ function renderEmails() {
   });
 }
 
-// Add new email
 function addEmail() {
   const email = emailInput.value.trim();
 
@@ -39,31 +37,26 @@ function addEmail() {
   renderEmails();
 }
 
-// Delete email
 function deleteEmail(index) {
-  if (confirm("Are you sure you want to delete this email?")) {
-    emails.splice(index, 1);
-    localStorage.setItem("emails", JSON.stringify(emails));
-    renderEmails();
-  }
+  emails.splice(index, 1);
+  localStorage.setItem("emails", JSON.stringify(emails));
+  renderEmails();
 }
 
-// Edit email using prompt
-function editEmail(index) {
-  const newEmail = prompt("Edit email:", emails[index]);
-  if (newEmail !== null) { // user didn't press Cancel
-    if (!emailPattern.test(newEmail.trim())) {
-      alert("⚠️ Invalid email format!");
-      return;
-    }
-    emails[index] = newEmail.trim();
-    localStorage.setItem("emails", JSON.stringify(emails));
-    renderEmails();
-  }
-}
+function startEdit(index) {
+  const newEmail = prompt("Edit the email:", emails[index]);
+  if (newEmail === null) return; // User canceled
+  const trimmedEmail = newEmail.trim();
 
-// Button click
-mainBtn.addEventListener("click", addEmail);
+  if (!emailPattern.test(trimmedEmail)) {
+    alert("⚠️ Invalid email format!");
+    return;
+  }
+
+  emails[index] = trimmedEmail;
+  localStorage.setItem("emails", JSON.stringify(emails));
+  renderEmails();
+}
 
 // Initial render
 renderEmails();

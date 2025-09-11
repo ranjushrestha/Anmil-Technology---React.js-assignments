@@ -1,50 +1,127 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* CSS Variables for colors */
+:root {
+  --primary: #007bff;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f4f4f4;
+  --white: #ffffff;
+  --gray: #ddd;
+  --gray-light: #f2f2f2;
 }
 
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f4f4f4;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    input {
-      padding: 10px;
-      width: 70%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-top: 30px;
-    }
-    button {
-      padding: 8px 12px;
-      margin-left: 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button.add { background: #28a745; color: white; }
-    button.update { background: #ffc107; color: black; }
-    button.edit { background: #007bff; color: white; }
-    button.delete { background: #dc3545; color: white; }
-    table {
-      width: 100%;
-      margin-top: 30px;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: #f2f2f2;
-    }
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Body */
+body {
+  background: var(--light);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  width: 100%;
+  background: var(--white);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Input */
+input {
+  padding: 10px;
+  width: 70%;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+  margin-top: 30px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+/* Buttons */
+button {
+  padding: 8px 12px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button.add {
+  background: var(--success);
+  color: var(--white);
+}
+
+button.add:hover {
+  background: #218838;
+}
+
+button.update {
+  background: var(--warning);
+  color: black;
+}
+
+button.update:hover {
+  background: #e0a800;
+}
+
+button.edit {
+  background: var(--primary);
+  color: var(--white);
+}
+
+button.edit:hover {
+  background: #0069d9;
+}
+
+button.delete {
+  background: var(--danger);
+  color: var(--white);
+}
+
+button.delete:hover {
+  background: #c82333;
+}
+
+/* Table */
+table {
+  width: 100%;
+  margin-top: 30px;
+  border-collapse: collapse;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+th, td {
+  border: 1px solid var(--gray);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--gray-light);
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tr:hover {
+  background: #f1f7ff;
+}
