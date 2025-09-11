@@ -1,4 +1,3 @@
-// fetchData.js
 export async function getData() {
   const url = 'https://jsonplaceholder.typicode.com/posts?_limit=10';
   const response = await fetch(url);
