@@ -1,12 +1,14 @@
 const emailInput = document.getElementById("emailInput");
 const emailList = document.getElementById("emailList");
 const mainBtn = document.getElementById("mainBtn");
+const errorMsg = document.getElementById("errorMsg");
 
 // Regex for email validation
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
 
 // Load from localStorage
 let emails = JSON.parse(localStorage.getItem("emails")) || [];
+let editIndex = -1;
 
 function renderEmails() {
   emailList.innerHTML = "";
@@ -25,9 +27,10 @@ function renderEmails() {
 
 function addEmail() {
   const email = emailInput.value.trim();
+  errorMsg.textContent = ""; // clear error first
 
   if (!emailPattern.test(email)) {
-    alert("⚠️ Invalid email format!");
+    errorMsg.textContent = "⚠️ Invalid email format!";
     return;
   }
 
@@ -44,19 +47,42 @@ function deleteEmail(index) {
 }
 
 function startEdit(index) {
-  const newEmail = prompt("Edit the email:", emails[index]);
-  if (newEmail === null) return; // User canceled
-  const trimmedEmail = newEmail.trim();
+  emailInput.value = emails[index];
+  editIndex = index;
+  mainBtn.textContent = "Update";
+  mainBtn.className = "update";
+  mainBtn.setAttribute("onclick", "updateEmail()");
+  errorMsg.textContent = ""; // clear any old error
+}
 
-  if (!emailPattern.test(trimmedEmail)) {
-    alert("⚠️ Invalid email format!");
+function updateEmail() {
+  const email = emailInput.value.trim();
+  errorMsg.textContent = ""; // clear error first
+
+  if (!emailPattern.test(email)) {
+    errorMsg.textContent = "Please enter a valid email address";
     return;
   }
 
-  emails[index] = trimmedEmail;
+  emails[editIndex] = email;
   localStorage.setItem("emails", JSON.stringify(emails));
+  emailInput.value = "";
+  editIndex = -1;
+  mainBtn.textContent = "Add";
+  mainBtn.className = "add";
+  mainBtn.setAttribute("onclick", "addEmail()");
   renderEmails();
 }
+
+// 🔹 Live validation as user types
+emailInput.addEventListener("input", () => {
+  const email = emailInput.value.trim();
+  if (email === "" || emailPattern.test(email)) {
+    errorMsg.textContent = "";
+  } else {
+    errorMsg.textContent = "Please enter a valid email address!";
+  }
+});
 
 // Initial render
 renderEmails();

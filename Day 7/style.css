@@ -24,11 +24,13 @@ body {
   padding: 20px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 /* Container */
 .container {
-  max-width: 600px;
+  max-width: 900px;
   width: 100%;
   background: var(--white);
   padding: 25px;
@@ -36,73 +38,73 @@ body {
   box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Input */
-input {
+/* Input + Error */
+#emailInput {
   padding: 10px;
-  width: 70%;
+  width:100% ;
   border: 1px solid var(--gray);
   border-radius: 5px;
-  margin-top: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   outline: none;
   transition: all 0.3s ease;
 }
 
-input:focus {
+#emailInput:focus {
   border-color: var(--primary);
   box-shadow: 0 0 5px rgba(0,123,255,0.3);
 }
 
+.error {
+  color: var(--danger);
+  font-size: 14px;
+  margin: 5px 0 10px;
+}
+
 /* Buttons */
 button {
-  padding: 8px 12px;
+  padding: 10px 14px;
   margin-left: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 button.add {
   background: var(--success);
   color: var(--white);
 }
-
-button.add:hover {
-  background: #218838;
-}
+button.add:hover { background: #218838; }
 
 button.update {
   background: var(--warning);
   color: black;
 }
-
-button.update:hover {
-  background: #e0a800;
-}
+button.update:hover { background: #e0a800; }
 
 button.edit {
   background: var(--primary);
   color: var(--white);
 }
-
-button.edit:hover {
-  background: #0069d9;
-}
+button.edit:hover { background: #0069d9; }
 
 button.delete {
   background: var(--danger);
   color: var(--white);
 }
-
-button.delete:hover {
-  background: #c82333;
-}
+button.delete:hover { background: #c82333; }
 
 /* Table */
+ .table-container {
+  width: 100%;
+  overflow-x: auto;
+ }
 table {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 25px;
   border-collapse: collapse;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
@@ -111,6 +113,7 @@ th, td {
   border: 1px solid var(--gray);
   padding: 10px;
   text-align: center;
+  white-space: nowrap;
 }
 
 th {
@@ -118,10 +121,13 @@ th {
   color: #333;
 }
 
-tr:nth-child(even) {
-  background: #fafafa;
+tr:nth-child(even) { background: #fafafa; }
+tr:hover { background: #f1f7ff; }
+
+
+/* Responsive layout */
+@media (max-width: 550px) {
+
 }
 
-tr:hover {
-  background: #f1f7ff;
-}
+
