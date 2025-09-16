@@ -240,6 +240,10 @@ tr.delete-row {
   #noDataRow {
     display: none;
   }
+
+  .input-group input {
+  width: 90%;
+}
   /* Make table and rows block */
   #emailTable,
   tbody,
