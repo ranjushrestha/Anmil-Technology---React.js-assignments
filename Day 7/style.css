@@ -1,14 +1,14 @@
 /* CSS Variables for colors */
 :root {
-  --primary: #2c2c2c;        /* main heading / important text */
-  --primary-dark: #1f1f1f;   /* slightly darker for hover / subheadings */
-  --success: #4caf50;         /* professional green for positive actions */
-  --warning: #ffb300;         /* muted amber for warnings */
-  --danger: #d32f2f;          /* professional red for errors */
-  --light: #f9f9f9;           /* light gray page background */
+  --primary: #2c2c2c;        
+  --primary-dark: #1f1f1f; 
+  --success: #4caf50;         
+  --warning: #ffb300;         
+  --danger: #d32f2f;        
+  --light: #f9f9f9;          
   --white: #ffffff;
-  --gray: #cccccc;             /* borders, subtle text */
-  --gray-light: #e6e6e6;       /* table headers or card background */
+  --gray: #cccccc;            
+  --gray-light: #e6e6e6;       
 }
 
 
@@ -94,7 +94,6 @@ h3 {
 }
 
 /* Add button */
-/* Add/Update button styling */
 .add {
   align-self: flex-start; /* aligns left */
   padding: 10px 20px;
@@ -183,12 +182,12 @@ button.delete:hover {
   background: #c82333;
 }
 
-/* Fade-in for new rows (applied on page load or when table changes) */
+/* Fade-in for new rows */
 table tr {
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Highlight update by hover (temporary visual effect) */
+
 table tr.update-hover {
   animation: highlightUpdate 1s ease forwards;
 }
@@ -257,7 +256,6 @@ table tr.update-hover {
     position: relative;
   }
 
-  /* Each cell: heading on left, value on right (except last cell for buttons) */
   #emailTable td:not(:last-child) {
     display: flex;
     justify-content: space-between;
@@ -266,7 +264,6 @@ table tr.update-hover {
     flex-wrap: nowrap;
   }
 
-  /* Last cell: buttons at bottom corners */
   #emailTable td:last-child {
     display: flex;
     justify-content: space-between;
