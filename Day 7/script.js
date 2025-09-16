@@ -87,17 +87,16 @@ function addContact() {
 
 // Delete a contact
 function deleteContact(index) {
-  const row = emailList.children[index]; // get the row to delete
-  row.classList.add("delete-row");      // apply animation
+  const row = emailList.children[index]; 
+  row.classList.add("delete-row"); // trigger animation
 
-  // Wait for animation to finish before removing
+  // Remove after animation
   row.addEventListener("animationend", () => {
-    contacts.splice(index, 1);          // remove from array
+    contacts.splice(index, 1);          
     localStorage.setItem("contacts", JSON.stringify(contacts));
-    renderContacts();                    // re-render table
-  });
+    renderContacts();                    
+  }, { once: true }); // important: ensures it triggers only once
 }
-
 
 // Start editing a contact
 function startEdit(index) {
