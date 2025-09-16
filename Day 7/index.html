@@ -8,28 +8,41 @@
 </head>
 <body>
   <div class="container">
-  <h2>Email CRUD App</h2>
-  
-  <div class="input-group">
-    <input type="text" id="emailInput" placeholder="Enter email">
-    <button id="mainBtn" class="add" onclick="addEmail()">Add</button>
-  </div>
-  
-  <!-- error message under input -->
-  <div id="errorMsg" class="error"></div>
-<div class="table-container">
-  <table id="emailTable">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="emailList"></tbody>
-  </table>
-</div>
+    <h2>Contact CRUD App</h2>
 
-</div>
+    <div class="input-group">
+      <input type="text" id="nameInput" placeholder="Enter name">
+      <div id="nameError" class="error"></div>
+
+      <input type="text" id="emailInput" placeholder="Enter email">
+      <div id="emailError" class="error"></div>
+
+      <input type="text" id="phoneInput" placeholder="Phone">
+      <div id="phoneError" class="error"></div>
+
+      <button id="mainBtn" class="add" onclick="addContact()">Add</button>
+    </div>
+
+    <div class="table-container">
+      <h3 class="contact-list">Contact List</h3>
+      <table id="emailTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="emailList">
+  <tr id="noDataRow">
+    <td colspan="4" style="text-align:center; color: gray;">No data entered</td>
+  </tr>
+</tbody>
+
+      </table>
+    </div>
+  </div>
 
 
   <script src="script.js"></script>

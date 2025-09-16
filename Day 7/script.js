@@ -1,88 +1,173 @@
+// Get DOM elements
+const nameInput = document.getElementById("nameInput");
 const emailInput = document.getElementById("emailInput");
+const phoneInput = document.getElementById("phoneInput");
 const emailList = document.getElementById("emailList");
 const mainBtn = document.getElementById("mainBtn");
-const errorMsg = document.getElementById("errorMsg");
 
-// Regex for email validation
+const nameError = document.getElementById("nameError");
+const emailError = document.getElementById("emailError");
+const phoneError = document.getElementById("phoneError");
+
+// Validation patterns
+const namePattern = /^[a-zA-Z\s]{2,30}$/;       // Letters & spaces, 2-30 chars
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+const phonePattern = /^[0-9]{7,15}$/;           // Digits only, 7-15 chars
 
-// Load from localStorage
-let emails = JSON.parse(localStorage.getItem("emails")) || [];
+// Load contacts from localStorage or initialize
+
+let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
 let editIndex = -1;
 
-function renderEmails() {
+// Render contacts in table
+function renderContacts() {
   emailList.innerHTML = "";
-  emails.forEach((email, index) => {
-    let row = document.createElement("tr");
+
+  if (contacts.length === 0) {
+    // Show placeholder row when no contacts exist
+    const row = document.createElement("tr");
+    row.id = "noDataRow";
+    row.innerHTML = `<td colspan="4" style="text-align:center; color: gray;">No data entered</td>`;
+    emailList.appendChild(row);
+    return;
+  }
+
+  contacts.forEach((contact, index) => {
+    const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${email}</td>
+      <td>${contact.name}</td>
+      <td>${contact.email}</td>
+      <td>${contact.phone}</td>
       <td>
         <button class="edit" onclick="startEdit(${index})">Edit</button>
-        <button class="delete" onclick="deleteEmail(${index})">Delete</button>
+        <button class="delete" onclick="deleteContact(${index})">Delete</button>
       </td>
     `;
     emailList.appendChild(row);
   });
 }
 
-function addEmail() {
-  const email = emailInput.value.trim();
-  errorMsg.textContent = ""; // clear error first
 
+// Add new contact
+function addContact() {
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+
+  // Clear previous errors
+  nameError.textContent = "";
+  emailError.textContent = "";
+  phoneError.textContent = "";
+
+  // Validate inputs
+  if (!namePattern.test(name)) {
+    nameError.textContent = "Please enter a valid name (2-30 letters)!";
+    return;
+  }
   if (!emailPattern.test(email)) {
-    errorMsg.textContent = "⚠️ Invalid email format!";
+    emailError.textContent = "Please enter a valid email!";
+    return;
+  }
+  if (!phonePattern.test(phone)) {
+    phoneError.textContent = "Please enter a valid phone number (7-15 digits)!";
     return;
   }
 
-  emails.push(email);
-  localStorage.setItem("emails", JSON.stringify(emails));
+  // Add contact
+  contacts.push({ name, email, phone });
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+
+  // Clear inputs
+  nameInput.value = "";
   emailInput.value = "";
-  renderEmails();
+  phoneInput.value = "";
+
+  renderContacts();
 }
 
-function deleteEmail(index) {
-  emails.splice(index, 1);
-  localStorage.setItem("emails", JSON.stringify(emails));
-  renderEmails();
+// Delete a contact
+function deleteContact(index) {
+  const row = emailList.children[index]; // get the row to delete
+  row.classList.add("delete-row");      // apply animation
+
+  // Wait for animation to finish before removing
+  row.addEventListener("animationend", () => {
+    contacts.splice(index, 1);          // remove from array
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+    renderContacts();                    // re-render table
+  });
 }
 
+
+// Start editing a contact
 function startEdit(index) {
-  emailInput.value = emails[index];
+  const contact = contacts[index];
+  nameInput.value = contact.name;
+  emailInput.value = contact.email;
+  phoneInput.value = contact.phone;
   editIndex = index;
+
+  // Change button to Update mode
   mainBtn.textContent = "Update";
-  mainBtn.className = "update";
-  mainBtn.setAttribute("onclick", "updateEmail()");
-  errorMsg.textContent = ""; // clear any old error
+  mainBtn.classList.add("update-btn");
+  mainBtn.classList.remove("add-btn");
+  mainBtn.setAttribute("onclick", "updateContact()");
 }
 
-function updateEmail() {
+// Update a contact
+function updateContact() {
+  const name = nameInput.value.trim();
   const email = emailInput.value.trim();
-  errorMsg.textContent = ""; // clear error first
+  const phone = phoneInput.value.trim();
 
+  // Clear previous errors
+  nameError.textContent = "";
+  emailError.textContent = "";
+  phoneError.textContent = "";
+
+  // Validate inputs
+  if (!namePattern.test(name)) {
+    nameError.textContent = "Please enter a valid name (2-30 letters)!";
+    return;
+  }
   if (!emailPattern.test(email)) {
-    errorMsg.textContent = "Please enter a valid email address";
+    emailError.textContent = "Please enter a valid email!";
+    return;
+  }
+  if (!phonePattern.test(phone)) {
+    phoneError.textContent = "Please enter a valid phone number (7-15 digits)!";
     return;
   }
 
-  emails[editIndex] = email;
-  localStorage.setItem("emails", JSON.stringify(emails));
-  emailInput.value = "";
+  // Update contact
+  contacts[editIndex] = { name, email, phone };
+  localStorage.setItem("contacts", JSON.stringify(contacts));
   editIndex = -1;
+
+  // Reset button to Add mode
   mainBtn.textContent = "Add";
-  mainBtn.className = "add";
-  mainBtn.setAttribute("onclick", "addEmail()");
-  renderEmails();
+  mainBtn.classList.remove("update-btn");
+ 
+  mainBtn.setAttribute("onclick", "addContact()");
+
+  // Clear inputs
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+
+  renderContacts();
 }
 
-// 🔹 Live validation as user types
+// Live validation as user types
+nameInput.addEventListener("input", () => {
+  nameError.textContent = namePattern.test(nameInput.value.trim()) ? "" : "2-30 letters required";
+});
 emailInput.addEventListener("input", () => {
-  const email = emailInput.value.trim();
-  if (email === "" || emailPattern.test(email)) {
-    errorMsg.textContent = "";
-  } else {
-    errorMsg.textContent = "Please enter a valid email address!";
-  }
+  emailError.textContent = emailPattern.test(emailInput.value.trim()) ? "" : "Invalid email";
+});
+phoneInput.addEventListener("input", () => {
+  phoneError.textContent = phonePattern.test(phoneInput.value.trim()) ? "" : "7-15 digits required";
 });
 
 // Initial render
-renderEmails();
+renderContacts();
