@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact List with Animations</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #f4f4f4;
+    }
+    button {
+      padding: 5px 10px;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+    /* Add animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .new-row {
+      animation: fadeIn 0.4s ease-out;
+    }
+    /* Delete animation */
+    @keyframes slideOut {
+      0% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+    .delete-row {
+      animation: slideOut 0.3s forwards;
+    }
+  </style>
+</head>
+<body>
+  <h2>Contact List</h2>
+
+  <input id="nameInput" placeholder="Name">
+  <input id="emailInput" placeholder="Email">
+  <input id="phoneInput" placeholder="Phone">
+  <button onclick="addContact()">Add</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th><th>Email</th><th>Phone</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="emailList"></tbody>
+  </table>
+
+  <script>
+    let contacts = [];
+    const emailList = document.getElementById("emailList");
+
+    function renderContacts() {
+      emailList.innerHTML = "";
+      contacts.forEach((contact, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${contact.name}</td>
+          <td>${contact.email}</td>
+          <td>${contact.phone}</td>
+          <td><button onclick="deleteContact(${index})">Delete</button></td>
+        `;
+        emailList.appendChild(row);
+      });
+    }
+
+    function addContact() {
+      const name = document.getElementById("nameInput").value.trim();
+      const email = document.getElementById("emailInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
+      if (!name || !email || !phone) return;
+
+      contacts.push({ name, email, phone });
+      renderContacts();
+
+      // Add animation only to the latest row
+      const newRow = emailList.lastElementChild;
+      if (newRow) {
+        newRow.classList.add("new-row");
+        newRow.addEventListener("animationend", () => {
+          newRow.classList.remove("new-row");
+        }, { once: true });
+      }
+
+      document.getElementById("nameInput").value = "";
+      document.getElementById("emailInput").value = "";
+      document.getElementById("phoneInput").value = "";
+    }
+
+    function deleteContact(index) {
+      const row = emailList.children[index];
+      row.classList.add("delete-row");
+      row.addEventListener("animationend", () => {
+        contacts.splice(index, 1);
+        renderContacts();
+      }, { once: true });
+    }
+  </script>
+</body>
+</html>

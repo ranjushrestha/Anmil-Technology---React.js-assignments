@@ -116,12 +116,11 @@ h3 {
 /* Table */
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden; 
 }
 
-.contact-list {
 
-}
+
 table {
   width: 100%;
   margin-top: 25px;
@@ -192,33 +191,60 @@ table tr.update-hover {
   animation: highlightUpdate 1s ease forwards;
 }
 
-/* Keyframes */
+/* ----------------- Animations ----------------- */
+/* Smooth fade-in for new row */
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+  }
+  25% {
+    opacity: 0.25;
+    transform: translateY(-6px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-3px);
+  }
+  75% {
+    opacity: 0.75;
+    transform: translateY(-1px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
-/* Animation for deleting a row */
+.new-row {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth slide-out for deleted row */
 @keyframes slideOut {
   0% {
     opacity: 1;
     transform: translateX(0);
+  }
+  25% {
+    opacity: 0.8;
+    transform: translateX(20%);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(40%);
+  }
+  75% {
+    opacity: 0.25;
+    transform: translateX(70%);
   }
   100% {
     opacity: 0;
     transform: translateX(100%);
   }
 }
-
 .delete-row {
-  animation: slideOut 0.3s forwards;
+  animation: slideOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-
 
  /* Add Responsiveness */
 
