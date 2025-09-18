@@ -1,13 +1,16 @@
-const slides = document.querySelectorAll('.slide');
+// Select elements
 const slider = document.querySelector('.slider');
+const slides = document.querySelectorAll('.slide');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const sliderBgOverlay = document.getElementById('slider-bg-overlay');
+const sliderContainer = document.querySelector('.slider-container');
 
-let index = 1; // start at 1 because of clones
-const slideInterval = 3000;
+let index = 1; // Start at 1 because of clones
+const slideInterval = 2000;
 let interval;
-let isTransitioning = false; // prevent multiple clicks during transition
+let isTransitioning = false; // Prevent multiple clicks during transition
+let isPaused = false;        // Track hover pause
 
 // Clone first and last slides for seamless loop
 const firstClone = slides[0].cloneNode(true);
@@ -56,27 +59,48 @@ slider.addEventListener('transitionend', () => {
   isTransitioning = false;
 });
 
-// Buttons
-nextBtn.addEventListener('click', () => { moveSlide(1); resetInterval(); });
-prevBtn.addEventListener('click', () => { moveSlide(-1); resetInterval(); });
-
+// Move slides
 function moveSlide(step) {
   showSlide(index + step);
 }
 
+// Buttons
+nextBtn.addEventListener('click', () => {
+  moveSlide(1);
+  resetInterval();
+});
+
+prevBtn.addEventListener('click', () => {
+  moveSlide(-1);
+  resetInterval();
+});
+
 // Auto-slide
 function startInterval() {
-  interval = setInterval(() => moveSlide(1), slideInterval);
+  clearInterval(interval); // clear any existing interval
+  if (!isPaused) {
+    interval = setInterval(() => moveSlide(1), slideInterval);
+  }
 }
+
+// Reset interval after manual navigation
 function resetInterval() {
   clearInterval(interval);
-  startInterval();
+  if (!isPaused) {
+    startInterval();
+  }
 }
 
 // Pause on hover
-const sliderContainer = document.querySelector('.slider-container');
-sliderContainer.addEventListener('mouseenter', () => clearInterval(interval));
-sliderContainer.addEventListener('mouseleave', startInterval);
+sliderContainer.addEventListener('mouseenter', () => {
+  clearInterval(interval);
+  isPaused = true;
+});
+
+sliderContainer.addEventListener('mouseleave', () => {
+  isPaused = false;
+  startInterval();
+});
 
 // Start slider
 startInterval();

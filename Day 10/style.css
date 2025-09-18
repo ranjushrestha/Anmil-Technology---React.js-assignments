@@ -28,18 +28,29 @@ body {
   z-index: -1; /* behind slider */
 }
 
+/* Slider wrapper matches the image size */
 .slider-wrapper {
   position: relative;
-  width: 80%;
-  max-width: 800px;
+  width: 820px;       /* match image width */
+  height: 547px;      /* match image height */
   overflow: hidden;
   border-radius: 10px;
   z-index: 1;
+  flex-shrink: 0;     /* prevents shrinking in flex layouts */
 }
 
+/* Slider container fills the wrapper */
 .slider-container {
-  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* fills container */
+  border-radius: 10px;
 }
 
 .slider {
@@ -52,11 +63,9 @@ body {
   cursor: pointer;
 }
 
-.slide img {
-  width: 100%;
-  display: block;
-  border-radius: 10px;
-}
+
+
+
 
 /* Buttons */
 .slider-buttons {
