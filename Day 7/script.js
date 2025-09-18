@@ -64,7 +64,7 @@ function addContact() {
   phoneError.textContent = "";
 
   // Validate
-  if (!namePattern.test(name)) { nameError.textContent = "2-30 letters required"; return; }
+  if (!namePattern.test(name)) { nameError.textContent = "2-15 letters required"; return; }
   if (!emailPattern.test(email)) { emailError.textContent = "Invalid email"; return; }
   if (!phonePattern.test(phone)) { phoneError.textContent = "7-15 digits required"; return; }
 
@@ -118,7 +118,7 @@ function startEdit(index) {
   mainBtn.setAttribute("onclick", "updateContact()");
 }
 
-// Update a contact
+
 // Update a contact
 function updateContact() {
   const name = nameInput.value.trim();
@@ -129,7 +129,7 @@ function updateContact() {
   nameError.textContent = ""; emailError.textContent = ""; phoneError.textContent = "";
 
   // Validate
-  if (!namePattern.test(name)) { nameError.textContent = "2-30 letters required"; return; }
+  if (!namePattern.test(name)) { nameError.textContent = "2-15 letters required"; return; }
   if (!emailPattern.test(email)) { emailError.textContent = "Invalid email"; return; }
   if (!phonePattern.test(phone)) { phoneError.textContent = "7-15 digits required"; return; }
 
@@ -160,7 +160,7 @@ function updateContact() {
 
 // Live validation
 nameInput.addEventListener("input", () => {
-  nameError.textContent = namePattern.test(nameInput.value.trim()) ? "" : "2-30 letters required";
+  nameError.textContent = namePattern.test(nameInput.value.trim()) ? "" : "2-15 letters required";
 });
 emailInput.addEventListener("input", () => {
   emailError.textContent = emailPattern.test(emailInput.value.trim()) ? "" : "Invalid email";

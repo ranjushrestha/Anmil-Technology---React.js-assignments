@@ -1,14 +1,14 @@
 /* CSS Variables for colors */
 :root {
-  --primary: #2c2c2c;        
+  --primary: #7d7777;        
   --primary-dark: #1f1f1f; 
   --success: #4caf50;         
   --warning: #ffb300;         
   --danger: #d32f2f;        
   --light: #f9f9f9;          
   --white: #ffffff;
-  --gray: #cccccc;            
-  --gray-light: #e6e6e6;       
+  --gray: #a69d9d8b;            
+  --gray-light: #aaa5a5;       
 }
 
 
@@ -103,9 +103,12 @@ h3 {
   font-weight: 500;
   transition: all 0.3s ease;
   color: var(--white);
-  background-color: var(--success);
+  background-color: rgb(120, 114, 114);
 }
 
+.add:hover {
+  background-color: var(--success);
+}
 
 /* Update mode */
 .update-btn {
@@ -143,8 +146,12 @@ tr:nth-child(even) {
   background: #fafafa;
 }
 
+tr:nth-child(odd) {
+  background: #eeebebf1;
+}
+
 tr:hover {
-  background: #f1f7ff;
+  background: rgba(230, 231, 234, 0.925);
 }
 
 /* Action buttons inside table */
@@ -162,7 +169,7 @@ button.edit {
   color: var(--white);
 }
 button.edit:hover {
-  background: #0069d9;
+  background: black;
 }
 
 button.update {
@@ -174,7 +181,7 @@ button.update:hover {
 }
 
 button.delete {
-  background: var(--danger);
+  background: rgb(149, 147, 147);
   color: var(--white);
 }
 button.delete:hover {
@@ -248,7 +255,7 @@ table tr.update-hover {
 
  /* Add Responsiveness */
 
-@media (max-width: 780px) {
+@media (max-width: 680px) {
 
   #noDataRow {
     display: none;
