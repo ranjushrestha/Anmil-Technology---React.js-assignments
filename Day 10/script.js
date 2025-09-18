@@ -4,9 +4,10 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const sliderBgOverlay = document.getElementById('slider-bg-overlay');
 
-let index = 1; // start at 1 because we'll add clones
-const slideInterval = 2000;
+let index = 1; // start at 1 because of clones
+const slideInterval = 3000;
 let interval;
+let isTransitioning = false; // prevent multiple clicks during transition
 
 // Clone first and last slides for seamless loop
 const firstClone = slides[0].cloneNode(true);
@@ -23,15 +24,17 @@ const totalSlides = allSlides.length;
 // Set initial position
 slider.style.transform = `translateX(-${index * 100}%)`;
 
-// Show background overlay
+// Update background overlay
 function updateBackground() {
   const imgSrc = allSlides[index].querySelector('img').src;
   sliderBgOverlay.style.backgroundImage = `url('${imgSrc}')`;
 }
 updateBackground();
 
-// Function to move slides
+// Show slide function
 function showSlide(i) {
+  if (isTransitioning) return;
+  isTransitioning = true;
   index = i;
   slider.style.transition = 'transform 0.5s ease-in-out';
   slider.style.transform = `translateX(-${index * 100}%)`;
@@ -50,6 +53,7 @@ slider.addEventListener('transitionend', () => {
     index = totalSlides - 2;
     slider.style.transform = `translateX(-${index * 100}%)`;
   }
+  isTransitioning = false;
 });
 
 // Buttons
