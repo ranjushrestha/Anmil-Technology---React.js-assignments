@@ -16,7 +16,7 @@ let interval = null;
 let isDragging = false;
 let startX = 0;
 
-// ----- Create Slides -----
+//  Create Slides 
 images.forEach(src => {
   const div = document.createElement('div');
   div.className = 'slide';
@@ -26,7 +26,7 @@ images.forEach(src => {
   slider.appendChild(div);
 });
 
-// ----- Clone first and last slides for seamless loop -----
+//  Clone first and last slides for seamless loop 
 const slides = document.querySelectorAll('.slide');
 const firstClone = slides[0].cloneNode(true);
 const lastClone = slides[slides.length - 1].cloneNode(true);
@@ -37,21 +37,19 @@ slider.insertBefore(lastClone, slides[0]);
 
 const allSlides = document.querySelectorAll('.slide');
 
-// ----- Helpers -----
+//  Helpers 
 function updateTransformX() {
   slider.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
 function updateOverlay() {
-  if (allSlides[currentIndex]) { // safety check
+  if (allSlides[currentIndex]) { 
     overlay.style.backgroundImage = `url('${allSlides[currentIndex].querySelector('img').src}')`;
   }
 }
 
 function showSlide(index) {
   slider.style.transition = 'transform 0.5s ease-in-out';
-
-  // Clamp index to prevent going out of bounds
   if (index < 0) currentIndex = 0;
   if (index >= allSlides.length) currentIndex = allSlides.length - 1;
 
@@ -59,11 +57,11 @@ function showSlide(index) {
   updateOverlay();
 }
 
-// ----- Set initial position -----
+// Set initial position
 updateTransformX();
 updateOverlay();
 
-// ----- Loop fix on transition end -----
+//  Loop fix on transition end 
 slider.addEventListener('transitionend', () => {
   if (allSlides[currentIndex].id === 'first-clone') {
     slider.style.transition = 'none';
@@ -77,7 +75,7 @@ slider.addEventListener('transitionend', () => {
   }
 });
 
-// ----- Autoplay -----
+//  Autoplay 
 function startInterval() {
   clearInterval(interval);
   interval = setInterval(() => {
@@ -109,11 +107,11 @@ prevBtn.addEventListener('click', () => {
   resumeAutoplay();
 });
 
-// ----- Pause on hover -----
+//  Pause on hover 
 slider.addEventListener('mouseenter', pauseAutoplay);
 slider.addEventListener('mouseleave', resumeAutoplay);
 
-// ----- Drag -----
+//  Drag 
 function dragStart(x) {
   isDragging = true;              
   startX = x;                   
@@ -132,7 +130,7 @@ function dragEnd(x) {
   resumeAutoplay();               
 }
 
-// ----- Mouse Events  -----
+//  Mouse Events  
 container.addEventListener('mousedown', e => dragStart(e.clientX));
 container.addEventListener('mouseup', e => dragEnd(e.clientX));
 container.addEventListener('mouseleave', e => {
@@ -140,5 +138,5 @@ container.addEventListener('mouseleave', e => {
 });
 container.addEventListener('mousemove', e => { if (!isDragging) return; });
 
-// ----- Start -----
+//  Start 
 startInterval();
