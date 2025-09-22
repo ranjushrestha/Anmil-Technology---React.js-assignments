@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import InputComponent from "./InputComponent";
-import ButtonComponent from "./ButtonComponent";
+import InputComponent from "./Components/InputComponent";
+import ButtonComponent from "./Components/ButtonComponent";
 import "./App.css";
 
 function App() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [count, setCount] = useState(0);
+
+  function handleIncrement() {
+    setCount(prev => prev + 1);
+  };
+
+  function handleDecrement() {
+    setCount(prev => prev - 1);
+  };
 
   return (
     <div className="app-container">
@@ -31,8 +40,12 @@ function App() {
       />
 
       <div className="button-group">
-        <ButtonComponent buttonText="Submit" variant="primary" type="submit" />
-        <ButtonComponent buttonText="Cancel" variant="secondary" type="button" />
+        <p>count = {count}</p>
+        <ButtonComponent buttonText="Increase" variant="primary" onClick={handleIncrement} />
+        <ButtonComponent buttonText="Decrease" variant="secondary" onClick={handleDecrement} />
+      </div>
+      <div>
+        shared count value: {count}
       </div>
     </div>
   );
