@@ -17,7 +17,7 @@ const Card = ({ product }) => {
       <h3 className="card-title">{product.title}</h3>
       <p className="card-price">Price: ${product.price}</p>
       <p className="card-rating">Rating: {product.rating} ⭐</p>
-      <Button onClick={handleAdd}>Add to Cart</Button>
+      <Button variant= "primary" onClick={handleAdd}>Add to Cart</Button>
     </div>
   );
 };

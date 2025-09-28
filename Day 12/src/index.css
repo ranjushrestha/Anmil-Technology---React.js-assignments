@@ -6,23 +6,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #333;
+  background: #a37da9;
   color: white;
-  padding: 10px 20px;
+  padding: 20px 20px;
 }
 
 .cart-btn {
-  background: #ff9800;
+  background: transparent;
   color: white;
   border: none;
   padding: 6px 12px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 18px;
 }
 
-.cart-btn:hover {
-  background: #e68900;
-}
 
 .cart-dropdown {
   position: absolute;
@@ -80,26 +78,29 @@ body {
 }
 
 .btn {
-  background-color: #ad8dd9;
-  color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   margin-top: 4px;
+  color: white;
 }
 
-.btn:hover {
+
+.btn.primary {
+  background-color: #ad8dd9;
+}
+
+.btn.primary:hover {
   background-color: #c58cd2;
 }
 
 
-.btn.remove {
+.btn.secondary {
   background-color: #ff4d4f;
 }
 
-.btn.remove:hover {
+.btn.secondary:hover {
   background-color: #ff7875;
 }
-

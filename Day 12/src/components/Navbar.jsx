@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCards } from "../context/CardContext";
-import Button from "./Button"; // import your reusable Button
+import Button from "./Button"; 
 import "../index.css";
 
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
                   <span>{item.title}</span >
     
                   <Button 
-                    variant="remove"
+                    variant="secondary"
                     onClick={() =>
                       dispatch({ type: "REMOVE_FROM_CART", payload: item.cartId })
                     }
