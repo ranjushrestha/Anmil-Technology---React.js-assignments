@@ -21,26 +21,25 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = {};
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  const newErrors = {};
 
-    if (!formData.username.trim()) newErrors.username = "Username required";
-    if (!formData.email.trim()) newErrors.email = "Email required";
-    if (!formData.password.trim()) newErrors.password = "Password required";
-    if (!formData.terms) newErrors.terms = "You must accept terms";
+  if (!formData.username.trim()) newErrors.username = "Username required";
+  if (!formData.email.trim()) newErrors.email = "Email required";
+  if (!formData.password.trim()) newErrors.password = "Password required";
+  if (!formData.terms) newErrors.terms = "You must accept terms";
 
-    setErrors(newErrors);
+  setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      alert("Form submitted!");
-      setFormData({ username: "", email: "", password: "", terms: false });
-    }
-  };
+  if (Object.keys(newErrors).length === 0) {
+    setFormData({ username: "", email: "", password: "", terms: false });
+  }
+};
+
 
   return (
     <div className="signup-container">
-      {/* Instagram-style dark mode switch */}
       <div className="dark-mode-switch">
         <span>Dark Mode</span>
         <label className="switch">

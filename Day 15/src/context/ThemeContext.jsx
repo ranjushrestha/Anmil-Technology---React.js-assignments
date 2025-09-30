@@ -5,7 +5,7 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
 
-  // Load system preference or saved theme
+
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
@@ -32,5 +32,5 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// ✅ Custom hook
+
 export const useTheme = () => useContext(ThemeContext);
