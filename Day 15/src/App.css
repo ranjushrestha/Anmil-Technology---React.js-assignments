@@ -1,10 +1,41 @@
+body.light {
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-primary: #111;
+  --text-secondary: #555;
+  --input-bg: #fff;
+  --input-border: #ddd;
+  --button-bg-start: #4caf50;
+  --button-bg-end: #43a047;
+  --button-hover-start: #43a047;
+  --button-hover-end: #388e3c;
+  --toggle-color: #4caf50;
+  --error-color: #e53935;
+}
+
+body.dark {
+  --bg: #121212;
+  --card-bg: #1f2937;
+  --text-primary: #fff;
+  --text-secondary: #ccc;
+  --input-bg: #1e1e1e;
+  --input-border: #333;
+  --button-bg-start: #2563eb;
+  --button-bg-end: #1d4ed8;
+  --button-hover-start: #1e40af;
+  --button-hover-end: #1e3a8a;
+  --toggle-color: #60a5fa;
+  --error-color: #f87171;
+}
+
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
+  background: var(--bg);
+  color: var(--text-primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +48,7 @@ body {
 }
 
 .signup-form {
-  background: #fff;
+  background: var(--card-bg);
   padding: 35px 30px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -35,7 +66,7 @@ body {
   margin-bottom: 30px;
   font-size: 1.9rem;
   font-weight: 600;
-  color: #111;
+  color: var(--text-primary);
 }
 
 .form-group {
@@ -48,7 +79,7 @@ body {
 .form-group label {
   margin-bottom: 8px;
   font-weight: 500;
-  color: #555;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -56,15 +87,17 @@ body {
 .form-group input[type="email"],
 .form-group input[type="password"] {
   padding: 12px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   font-size: 1rem;
+  background: var(--input-bg);
+  color: var(--text-primary);
   transition: all 0.2s;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #4caf50;
+  border-color: var(--button-bg-start);
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
 }
 
@@ -88,14 +121,13 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
-  color: #4caf50;
+  font-size: 1.2rem;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .toggle-password:hover {
-  color: #388e3c;
+  opacity: 0.8;
 }
 
 .checkbox-group {
@@ -110,11 +142,11 @@ body {
   display: block;
   margin-top: 4px;
   font-size: 12px;
-  color: #e53935;
+  color: var(--error-color);
 }
 
 .error {
-  color: #e53935;
+  color: var(--error-color);
   font-size: 12px;
   margin-top: 4px;
   display: block;
@@ -123,9 +155,9 @@ body {
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #4caf50, #43a047);
+  background: linear-gradient(135deg, var(--button-bg-start), var(--button-bg-end));
   border: none;
-  color: #fff;
+  color: var(--button-text, #fff);
   font-weight: 600;
   font-size: 1rem;
   border-radius: 8px;
@@ -135,8 +167,61 @@ body {
 }
 
 .submit-btn:hover {
-  background: linear-gradient(135deg, #43a047, #388e3c);
+  background: linear-gradient(135deg, var(--button-hover-start), var(--button-hover-end));
   box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+}
+
+.dark-mode-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--button-bg-end);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
 }
 
 @media (max-width: 480px) {

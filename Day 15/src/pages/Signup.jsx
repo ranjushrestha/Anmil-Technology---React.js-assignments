@@ -1,7 +1,9 @@
 import { useState } from "react";
-import "../App.css"; 
+import { useTheme } from "../context/ThemeContext"; 
+import "../App.css";
 
 function Signup() {
+  const { theme, toggleTheme } = useTheme();  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -31,7 +33,6 @@ function Signup() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData);
       alert("Form submitted!");
       setFormData({ username: "", email: "", password: "", terms: false });
     }
@@ -39,9 +40,21 @@ function Signup() {
 
   return (
     <div className="signup-container">
+      {/* Instagram-style dark mode switch */}
+      <div className="dark-mode-switch">
+        <span>Dark Mode</span>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
+          <span className="slider round"></span>
+        </label>
+      </div>
+
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Signup Form</h2>
-
         {/* Username */}
         <div className="form-group">
           <label>Username:</label>
@@ -79,13 +92,16 @@ function Signup() {
               onChange={handleChange}
               placeholder="Enter password"
             />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+            
+                    <button
+          type="button"
+          className="toggle-password"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "\u{1F441}" : "\u{1F441}\u{200D}\u{1F5E8}"} 
+        </button>
+
+   
           </div>
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
