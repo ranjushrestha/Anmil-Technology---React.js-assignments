@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTheme } from "../context/ThemeContext"; 
 import "../App.css";
 
-function Signup() {
+function Subscribe() {
   const { theme, toggleTheme } = useTheme();  
   const [formData, setFormData] = useState({
     username: "",
@@ -21,25 +21,24 @@ function Signup() {
     });
   };
 
- const handleSubmit = (e) => {
-  e.preventDefault();
-  const newErrors = {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
 
-  if (!formData.username.trim()) newErrors.username = "Username required";
-  if (!formData.email.trim()) newErrors.email = "Email required";
-  if (!formData.password.trim()) newErrors.password = "Password required";
-  if (!formData.terms) newErrors.terms = "You must accept terms";
+    if (!formData.username.trim()) newErrors.username = "Username required";
+    if (!formData.email.trim()) newErrors.email = "Email required";
+    if (!formData.password.trim()) newErrors.password = "Password required";
+    if (!formData.terms) newErrors.terms = "You must accept terms";
 
-  setErrors(newErrors);
+    setErrors(newErrors);
 
-  if (Object.keys(newErrors).length === 0) {
-    setFormData({ username: "", email: "", password: "", terms: false });
-  }
-};
-
+    if (Object.keys(newErrors).length === 0) {
+      setFormData({ username: "", email: "", password: "", terms: false });
+    }
+  };
 
   return (
-    <div className="signup-container">
+    <div className="subscribe-container">
       <div className="dark-mode-switch">
         <span>Dark Mode</span>
         <label className="switch">
@@ -52,8 +51,9 @@ function Signup() {
         </label>
       </div>
 
-      <form className="signup-form" onSubmit={handleSubmit}>
-        <h2>Signup Form</h2>
+      <form className="subscribe-form" onSubmit={handleSubmit}>
+        <h2>Subscribtion Form</h2>
+
         {/* Username */}
         <div className="form-group">
           <label>Username:</label>
@@ -91,16 +91,13 @@ function Signup() {
               onChange={handleChange}
               placeholder="Enter password"
             />
-            
-                    <button
-          type="button"
-          className="toggle-password"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          {showPassword ? "\u{1F441}" : "\u{1F441}\u{200D}\u{1F5E8}"} 
-        </button>
-
-   
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "\u{1F441}" : "\u{1F441}\u{200D}\u{1F5E8}"}
+            </button>
           </div>
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
@@ -117,10 +114,10 @@ function Signup() {
           {errors.terms && <p className="error">{errors.terms}</p>}
         </div>
 
-        <button type="submit" className="submit-btn">Signup</button>
+        <button type="submit" className="submit-btn">Subscribe</button>
       </form>
     </div>
   );
 }
 
-export default Signup;
+export default Subscribe;

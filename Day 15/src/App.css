@@ -41,13 +41,13 @@ body {
   align-items: center;
 }
 
-.signup-container {
+.subscribe-container {
   width: 100%;
   max-width: 450px;
   padding: 20px;
 }
 
-.signup-form {
+.subscribe-form {
   background: var(--card-bg);
   padding: 35px 30px;
   border-radius: 12px;
@@ -57,11 +57,11 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.signup-form:hover {
+.subscribe-form:hover {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-.signup-form h2 {
+.subscribe-form h2 {
   text-align: center;
   margin-bottom: 30px;
   font-size: 1.9rem;
@@ -225,10 +225,10 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 480px) {
-  .signup-form {
+  .subscribe-form {
     padding: 25px 20px;
   }
-  .signup-form h2 {
+  .subscribe-form h2 {
     font-size: 1.6rem;
   }
 }
