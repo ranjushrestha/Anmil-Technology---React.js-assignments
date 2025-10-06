@@ -1,39 +1,79 @@
 import { useState } from "react";
-import { useTheme } from "../context/ThemeContext"; 
+import { useTheme } from "../context/ThemeContext";
+import { validationRules } from "../hooks/ValidationHooks";
 import "../App.css";
 
 function Subscribe() {
-  const { theme, toggleTheme } = useTheme();  
+  const { theme, toggleTheme } = useTheme();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     terms: false,
+    gender: "",
+    subscription: "",
   });
+
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
+  // Handle input changes dynamically
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   };
 
+  // Validate a single field
+  const validateField = (name, value) => {
+    const rules = validationRules[name];
+    if (!rules) return null;
+
+    // Check required
+    if (rules.required) {
+      const isEmpty =
+        value === "" ||
+        value === null ||
+        (typeof value === "boolean" && !value);
+      if (isEmpty) return rules.required;
+    }
+
+    // Check minLength
+    if (rules.minLength && value.length < rules.minLength.value) {
+      return rules.minLength.message;
+    }
+
+    // Check pattern
+    if (rules.pattern && !rules.pattern.value.test(value)) {
+      return rules.pattern.message;
+    }
+
+    return null;
+  };
+
+  // Validate entire form
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = {};
 
-    if (!formData.username.trim()) newErrors.username = "Username required";
-    if (!formData.email.trim()) newErrors.email = "Email required";
-    if (!formData.password.trim()) newErrors.password = "Password required";
-    if (!formData.terms) newErrors.terms = "You must accept terms";
+    const newErrors = Object.keys(formData)
+      .map((key) => ({ [key]: validateField(key, formData[key]) }))
+      .reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      setFormData({ username: "", email: "", password: "", terms: false });
+    if (!Object.values(newErrors).some(Boolean)) {
+      console.log("Form submitted:", formData);
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        terms: false,
+        gender: "",
+        subscription: "",
+      });
     }
   };
 
@@ -52,7 +92,7 @@ function Subscribe() {
       </div>
 
       <form className="subscribe-form" onSubmit={handleSubmit}>
-        <h2>Subscribtion Form</h2>
+        <h2>Subscription Form</h2>
 
         {/* Username */}
         <div className="form-group">
@@ -102,6 +142,29 @@ function Subscribe() {
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
+       {/* Gender */}
+<div className="form-group">
+  <label>Gender:</label>
+  <div className="radio-group">
+    {["male", "female", "other"].map((g) => (
+      <label key={g} className="radio-option">
+        <input
+          type="radio"
+          name="gender"
+          value={g}
+          checked={formData.gender === g}
+          onChange={handleChange}
+        />
+        {g}
+      </label>
+    ))}
+  </div>
+  {errors.gender && <p className="error">{errors.gender}</p>}
+</div>
+
+
+    
+
         {/* Terms */}
         <div className="form-group checkbox-group">
           <input
@@ -114,7 +177,9 @@ function Subscribe() {
           {errors.terms && <p className="error">{errors.terms}</p>}
         </div>
 
-        <button type="submit" className="submit-btn">Subscribe</button>
+        <button type="submit" className="submit-btn">
+          Subscribe
+        </button>
       </form>
     </div>
   );
