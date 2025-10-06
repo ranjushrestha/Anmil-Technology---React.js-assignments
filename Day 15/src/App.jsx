@@ -1,12 +1,12 @@
-import Subscribe from './pages/Subscribe'
-import Signup from './pages/Subscribe'
+import Subscribe from './pages/Subscribe';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <Subscribe />
-    </>
-  )
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
