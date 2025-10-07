@@ -10,7 +10,7 @@ export const useValidation = (defaultValues, validationRules) => {
     reset,
   } = useForm({
     defaultValues,
-   mode: "onSubmit"
+    mode: "onSubmit"
 , 
   });
 
