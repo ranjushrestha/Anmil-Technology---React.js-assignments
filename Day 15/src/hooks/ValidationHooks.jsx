@@ -1,24 +1,38 @@
-export const validationRules = {
-  username: {
-    required: "Username is required",
-    minLength: { value: 3, message: "Username must be at least 3 characters" }
-  },
-  email: {
-    required: "Email is required",
-    pattern: {
-      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Invalid email"
-    }
-  },
-  password: {
-    required: "Password is required",
-    minLength: { value: 6, message: "Password must be at least 6 characters" }
-  },
-  gender: {
-    required: "Please select a gender"
-  },
- 
-  terms: {
-    required: "You must accept terms"
+// src/utils/validation.js
+
+export const validationHooks= (values) => {
+  const errors = {};
+
+  // Username
+  if (!values.username || !values.username.trim()) {
+    errors.username = "Username is required";
+  } else if (values.username.length < 5) {
+    errors.username = "Username must be at least 5 characters";
   }
+
+  // Email
+  if (!values.email) {
+    errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
+
+  // Password
+  if (!values.password) {
+    errors.password = "Password is required";
+  } else if (values.password.length < 6) {
+    errors.password = "Password must be at least 6 characters";
+  }
+
+  // Gender
+  if (!values.gender) {
+    errors.gender = "Please select a gender";
+  }
+
+  // Terms checkbox
+  if (!values.terms) {
+    errors.terms = "You must accept the terms";
+  }
+
+  return errors;
 };

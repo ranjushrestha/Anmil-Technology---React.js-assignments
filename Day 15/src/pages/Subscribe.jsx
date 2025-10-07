@@ -1,6 +1,7 @@
+// src/components/Subscribe.js
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { validationRules } from "../hooks/ValidationHooks";
+import { validationHooks } from "../hooks/ValidationHooks"; 
 import "../App.css";
 
 function Subscribe() {
@@ -10,15 +11,14 @@ function Subscribe() {
     username: "",
     email: "",
     password: "",
-    terms: false,
     gender: "",
-    subscription: "",
+    terms: false,
   });
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
-  // Handle input changes dynamically
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -27,52 +27,21 @@ function Subscribe() {
     }));
   };
 
-  // Validate a single field
-  const validateField = (name, value) => {
-    const rules = validationRules[name];
-    if (!rules) return null;
-
-    // Check required
-    if (rules.required) {
-      const isEmpty =
-        value === "" ||
-        value === null ||
-        (typeof value === "boolean" && !value);
-      if (isEmpty) return rules.required;
-    }
-
-    // Check minLength
-    if (rules.minLength && value.length < rules.minLength.value) {
-      return rules.minLength.message;
-    }
-
-    // Check pattern
-    if (rules.pattern && !rules.pattern.value.test(value)) {
-      return rules.pattern.message;
-    }
-
-    return null;
-  };
-
-  // Validate entire form
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validationHooks(formData);
+    setErrors(validationErrors);
 
-    const newErrors = Object.keys(formData)
-      .map((key) => ({ [key]: validateField(key, formData[key]) }))
-      .reduce((acc, curr) => ({ ...acc, ...curr }), {});
-
-    setErrors(newErrors);
-
-    if (!Object.values(newErrors).some(Boolean)) {
+    // If no errors, submit form
+    if (Object.keys(validationErrors).length === 0) {
       console.log("Form submitted:", formData);
       setFormData({
         username: "",
         email: "",
         password: "",
-        terms: false,
         gender: "",
-        subscription: "",
+        terms: false,
       });
     }
   };
@@ -136,34 +105,31 @@ function Subscribe() {
               className="toggle-password"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? "\u{1F441}" : "\u{1F441}\u{200D}\u{1F5E8}"}
+              {showPassword ? "hide" : "show"}
             </button>
           </div>
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
-       {/* Gender */}
-<div className="form-group">
-  <label>Gender:</label>
-  <div className="radio-group">
-    {["male", "female", "other"].map((g) => (
-      <label key={g} className="radio-option">
-        <input
-          type="radio"
-          name="gender"
-          value={g}
-          checked={formData.gender === g}
-          onChange={handleChange}
-        />
-        {g}
-      </label>
-    ))}
-  </div>
-  {errors.gender && <p className="error">{errors.gender}</p>}
-</div>
-
-
-    
+        {/* Gender */}
+        <div className="form-group">
+          <label>Gender:</label>
+          <div className="radio-group">
+            {["male", "female", "other"].map((g) => (
+              <label key={g} className="radio-option">
+                <input
+                  type="radio"
+                  name="gender"
+                  value={g}
+                  checked={formData.gender === g}
+                  onChange={handleChange}
+                />
+                {g}
+              </label>
+            ))}
+          </div>
+          {errors.gender && <p className="error">{errors.gender}</p>}
+        </div>
 
         {/* Terms */}
         <div className="form-group checkbox-group">
@@ -185,4 +151,4 @@ function Subscribe() {
   );
 }
 
-export default Subscribe;
+export default Subscribe;  
