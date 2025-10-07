@@ -1,38 +1,44 @@
-// src/utils/validation.js
 
-export const validationHooks= (values) => {
+
+export const validationHooks = (values) => {
   const errors = {};
 
-  // Username
-  if (!values.username || !values.username.trim()) {
-    errors.username = "Username is required";
-  } else if (values.username.length < 5) {
-    errors.username = "Username must be at least 5 characters";
-  }
+ 
+  const rules = {
+    username: {
+      required: "Username is required",
+      pattern: /^[a-zA-Z]{5,}$/,
+      patternMessage: "Username must be at least 5 characters and contain only letters",
+    },
+    email: {
+      required: "Email is required",
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      patternMessage: "Invalid email address",
+    },
+    password: {
+      required: "Password is required",
+      pattern: /^.{8,}$/, 
+      patternMessage: "Password must be at least 8 characters",
+    },
+    gender: { required: "Please select a gender" },
+    terms: { required: "You must accept the terms" },
+  };
 
-  // Email
-  if (!values.email) {
-    errors.email = "Email is required";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
+  // Validate fields
+  Object.keys(rules).forEach((field) => {
+    const value = values[field];
 
-  // Password
-  if (!values.password) {
-    errors.password = "Password is required";
-  } else if (values.password.length < 6) {
-    errors.password = "Password must be at least 6 characters";
-  }
+    // Required check
+    if (!value || (typeof value === "string" && !value.trim())) {
+      errors[field] = rules[field].required;
+      return;
+    }
 
-  // Gender
-  if (!values.gender) {
-    errors.gender = "Please select a gender";
-  }
-
-  // Terms checkbox
-  if (!values.terms) {
-    errors.terms = "You must accept the terms";
-  }
+    // Regex check
+    if (rules[field].pattern && !rules[field].pattern.test(value)) {
+      errors[field] = rules[field].patternMessage;
+    }
+  });
 
   return errors;
 };
