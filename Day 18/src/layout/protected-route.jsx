@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../pages/Navbar";
 
 const ProtectedRoute = () => {
-  const token = localStorage.getItem("token"); 
+  const token = localStorage.getItem('token'); 
   if (!token) {
     return <Navigate to="/login" replace />; 
   }

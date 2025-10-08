@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Validate from "../utils/Validate";
+import validate from "../utils/Validate";
 
 const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
   const [formData, setFormData] = useState(defaultValues);
@@ -32,7 +32,7 @@ const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
     e.preventDefault();
     setIsSubmitted(true);
 
-    const validationErrors = Validate(formData, validations);
+    const validationErrors = validate(formData, validations);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
