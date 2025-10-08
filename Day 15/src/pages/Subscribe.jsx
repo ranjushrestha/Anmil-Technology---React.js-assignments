@@ -21,7 +21,7 @@ function Subscribe() {
         required: true,
         validate: (val) => ({
            requirement: /^[a-zA-Z]{5,}$/.test(val), 
-           message: "Username must be at least 5 characters and contain only letters" }),
+           message: "Username must be at least 5 characters" }),
       },
       email: {
         required: true,
