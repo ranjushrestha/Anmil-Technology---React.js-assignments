@@ -1,47 +1,58 @@
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { useValidation } from "../hooks/ValidationHooks";
+import useForm from "../hooks/useForm"; 
 import "../App.css";
-
-const validationRules = {
-  username: {
-    required: "Username is required",
-    pattern: {
-      value: /^[a-zA-Z]{5,}$/,
-      message: "Username must be at least 5 characters and contain only letters",
-    },
-  },
-  email: {
-    required: "Email is required",
-    pattern: {
-      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Invalid email address",
-    },
-  },
-  password: {
-    required: "Password is required",
-    pattern: { value: /^.{8,}$/, message: "Password must be at least 8 characters" },
-  },
-  gender: { required: "Please select a gender" },
-  terms: { required: "You must accept the terms" },
-};
 
 function Subscribe() {
   const { theme, toggleTheme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { register, handleSubmit, errors, reset } = useValidation(
-    { username: "", email: "", password: "", gender: "", terms: false },
-    validationRules
-  );
+ 
+  const { formData, errors, handleChange, handleSubmit } = useForm({
+    defaultValues: 
+    { username: "", 
+      email: "", 
+      password: "", 
+      gender: "", 
+      terms: false },
+      
+    validations: {
+      username: {
+        required: true,
+        validate: (val) => ({
+           requirement: /^[a-zA-Z]{5,}$/.test(val), 
+           message: "Username must be at least 5 characters and contain only letters" }),
+      },
+      email: {
+        required: true,
+        validate: (val) => ({ 
+          requirement: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+           message: "Invalid email address" }),
+      },
+      password: {
+        required: true,
+        validate: (val) => ({ 
+          requirement: /^.{8,}$/.test(val), 
+          message: "Password must be at least 8 characters" }),
+      },
+      gender: {
+        required: true,
+        message: "Please select a gender",
+      },
+      terms: {
+        required: true,
+        message: "You must accept the terms",
+      },
+    },
+  });
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data);
-    reset(); 
+    alert("Form submitted successfully!");
   };
 
   return (
-    <div className="subscribe-container">
+    <div className={`subscribe-container ${theme === "dark" ? "dark" : ""}`}>
       <div className="dark-mode-switch">
         <span>Dark Mode</span>
         <label className="switch">
@@ -50,7 +61,7 @@ function Subscribe() {
         </label>
       </div>
 
-      <form className="subscribe-form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="subscribe-form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <h2>Subscription Form</h2>
 
         {/* Username */}
@@ -58,17 +69,25 @@ function Subscribe() {
           <label>Username:</label>
           <input
             type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             placeholder="Enter username"
-            {...register("username", validationRules.username)}
           />
-          {errors.username && <p className="error">{errors.username.message}</p>}
+          {errors.username && <p className="error">{errors.username}</p>}
         </div>
 
         {/* Email */}
         <div className="form-group">
           <label>Email:</label>
-          <input type="email" placeholder="Enter email" {...register("email", validationRules.email)} />
-          {errors.email && <p className="error">{errors.email.message}</p>}
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter email"
+          />
+          {errors.email && <p className="error">{errors.email}</p>}
         </div>
 
         {/* Password */}
@@ -77,18 +96,16 @@ function Subscribe() {
           <div className="password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="Enter password"
-              {...register("password", validationRules.password)}
             />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "hide" : "show"}
+            <button type="button" className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-          {errors.password && <p className="error">{errors.password.message}</p>}
+          {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
         {/* Gender */}
@@ -97,19 +114,30 @@ function Subscribe() {
           <div className="radio-group">
             {["male", "female", "other"].map((g) => (
               <label key={g} className="radio-option">
-                <input type="radio" value={g} {...register("gender", validationRules.gender)} />
+                <input
+                  type="radio"
+                  name="gender"
+                  value={g}
+                  checked={formData.gender === g}
+                  onChange={handleChange}
+                />
                 {g}
               </label>
             ))}
           </div>
-          {errors.gender && <p className="error">{errors.gender.message}</p>}
+          {errors.gender && <p className="error">{errors.gender}</p>}
         </div>
 
         {/* Terms */}
         <div className="form-group checkbox-group">
-          <input type="checkbox" {...register("terms", validationRules.terms)} />
+          <input
+            type="checkbox"
+            name="terms"
+            checked={formData.terms}
+            onChange={handleChange}
+          />
           <label>I agree to terms</label>
-          {errors.terms && <p className="error">{errors.terms.message}</p>}
+          {errors.terms && <p className="error">{errors.terms}</p>}
         </div>
 
         <button type="submit" className="submit-btn">
