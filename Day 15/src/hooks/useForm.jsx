@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import Validate from "../utils/Validate";
+import validate from "../utils/validate";
 
 const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
   const [formData, setFormData] = useState(defaultValues);
@@ -18,12 +19,11 @@ const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
 
     // Validate field if form has been submitted at least once
     if (isSubmitted) {
-      const fieldError = Validate({ [name]: val }, { [name]: validations[name] });
-      setErrors((prevErrors) => {
-        const updatedErrors = { ...prevErrors, ...fieldError };
-        if (!fieldError[name]) delete updatedErrors[name]; // Clear error if field is valid
-        return updatedErrors;
-      });
+      const fieldError = validate(
+        { [name]: val },
+        { [name]: validations[name] }
+      );
+      setErrors((prevErrors) => ({ ...prevErrors, ...fieldError }));
     }
   };
 
@@ -32,7 +32,7 @@ const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
     e.preventDefault();
     setIsSubmitted(true);
 
-    const validationErrors = Validate(formData, validations);
+    const validationErrors = validate(formData, validations);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {

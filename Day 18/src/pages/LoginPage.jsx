@@ -1,11 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import  { useState } from "react";
+import { Navigate } from "react-router";
 import useForm from "../hooks/useForm";
 import "../App.css";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
+  const [redirect, setRedirect] = useState(false); // track login status
 
   const { formData, errors, handleChange, handleSubmit } = useForm({
     defaultValues: {
@@ -15,21 +14,21 @@ const LoginPage = () => {
     },
     validations: {
       username: {
-        required: "Username is required",
+        required: true,
         validate: (value) => ({
           requirement: /^[a-zA-Z]{4,}$/.test(value),
           message: "Username must be at least 4 letters only",
         }),
       },
       email: {
-        required: "Email is required",
+        required: true,
         validate: (value) => ({
           requirement: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
           message: "Invalid email address",
         }),
       },
       password: {
-        required: "Password is required",
+        required: true,
         validate: (value) => ({
           requirement: /^.{8,}$/.test(value),
           message: "Password must be at least 8 characters",
@@ -41,8 +40,13 @@ const LoginPage = () => {
   // Form submit handler
   const onSubmit = (data) => {
     localStorage.setItem("token", "12345");
-    navigate("/", { replace: true });
+    setRedirect(true); //trigger navigation
   };
+
+  //  Render Navigate when redirect is true
+  if (redirect) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="login-container">
