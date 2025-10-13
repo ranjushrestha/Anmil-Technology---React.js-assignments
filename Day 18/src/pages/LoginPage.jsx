@@ -4,7 +4,7 @@ import useForm from "../hooks/useForm";
 import "../App.css";
 
 const LoginPage = () => {
-  const [redirect, setRedirect] = useState(false); // track login status
+  const [redirect, setRedirect] = useState(false); 
 
   const { formData, errors, handleChange, handleSubmit } = useForm({
     defaultValues: {
@@ -37,13 +37,13 @@ const LoginPage = () => {
     },
   });
 
-  // Form submit handler
+
   const onSubmit = (data) => {
     localStorage.setItem("token", "12345");
-    setRedirect(true); //trigger navigation
+    setRedirect(true); 
   };
 
-  //  Render Navigate when redirect is true
+
   if (redirect) {
     return <Navigate to="/" replace />;
   }

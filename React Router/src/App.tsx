@@ -22,6 +22,6 @@ function App() {
       <div><Link to="/students">Go to Student</Link></div>
     </>
   )
-}
+} 
 
 export default App

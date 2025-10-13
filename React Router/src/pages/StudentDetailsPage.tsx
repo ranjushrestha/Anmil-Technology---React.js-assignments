@@ -1,9 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom";
 
 const students = [
-  { name: "Adam Shtrestha", email: "adam@gmail.com", rollno: 500, sId: 1 },
-  { name: "Adina Shtrestha", email: "adina@gmail.com", rollno: 501, sId: 2 },
-  { name: "Krisa Shtrestha", email: "krisa@gmail.com", rollno: 502, sId: 3 }
+  { name: "Adam Maharjan", 
+    email: "adam@gmail.com",
+    rollno: 500, 
+    sId: 1 
+  },
+  { name: "Adina Karmacharya", 
+    email: "adina@gmail.com", 
+    rollno: 501, 
+    sId: 2 
+  },
+  { name: "Krisa Darnal", 
+    email: "krisa@gmail.com", 
+    rollno: 502, 
+    sId: 3 
+  }
 ];
 
 const StudentDetailsPage = () => {
