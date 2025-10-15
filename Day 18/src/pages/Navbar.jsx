@@ -1,18 +1,12 @@
-import  { useState } from "react";
-import { Navigate } from "react-router"; 
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setRedirect(true);
+    localStorage.removeItem("token"); 
+    navigate("/login", { replace: true }); 
   };
-
-  //  redirect without reloading
-  if (redirect) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <nav className="navbar">

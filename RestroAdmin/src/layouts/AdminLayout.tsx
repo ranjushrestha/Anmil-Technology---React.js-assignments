@@ -11,7 +11,7 @@ const AdminLayout: React.FC = () => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar with toggle function */}
+      
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main section */}

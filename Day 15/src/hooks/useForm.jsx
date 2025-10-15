@@ -17,7 +17,7 @@ const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
     const newData = { ...formData, [name]: val };
     setFormData(newData);
 
-    // Validate field if form has been submitted at least once
+    
     if (isSubmitted) {
       const fieldError = validate(
         { [name]: val },
@@ -36,7 +36,7 @@ const useForm = ({ defaultValues = {}, validations = {} } = {}) => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      callback(formData); // Call callback if no errors
+      callback(formData); 
     }
   };
 

@@ -5,12 +5,12 @@ body {
   justify-content: center;
   align-items: center;
   background: #f0f2f5; 
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: sans-serif;
 }
 
 /* ---------------------- Tabs Container ---------------------- */
 .tabs-container {
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   background: #ffffff;
   border-radius: 8px;
@@ -21,7 +21,7 @@ body {
 /* ---------------------- Tab List ---------------------- */
 .tab-list {
   display: flex;
-  border-bottom: 2px solid #e0e0e0;
+ 
   margin-bottom: 16px;
   gap: 4px; 
 }
@@ -32,11 +32,9 @@ body {
   padding: 12px 16px;
   background: #f9f9f9;
   border: none;
-  border-radius: 6px 6px 0 0;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   font-size: 16px;
-  transition: all 0.3s ease;
   text-align: center;
 }
 
@@ -45,9 +43,9 @@ body {
 }
 
 .tab.active {
-  border-bottom: 2px solid #007bff;
+
   font-weight: bold;
-  color: #007bff;
+  color: #78afea;
   background: #ffffff;
 }
 
@@ -60,13 +58,4 @@ body {
   min-height: 100px;
 }
 
-/* ---------------------- Individual Tab Panel ---------------------- */
-.tab-panel {
-  animation: fadeIn 0.3s ease-in;
-}
 
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}

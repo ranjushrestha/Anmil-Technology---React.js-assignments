@@ -1,24 +1,25 @@
-import React, { useState, Children, cloneElement, useContext } from "react";
-import { TabsContext, useTabs } from "../context/TabsContext";
+import { useState, createContext, useContext, cloneElement, Children } from "react";
 import "./Tabs.css";
 
-// Tabs container
-const Tabs = ({ children, defaultIndex = 0 }) => {
+
+const TabsContext = createContext();
+
+
+const useTabs = () => useContext(TabsContext);
+
+// Main Tabs container
+export const Tabs = ({ children, defaultIndex = 0 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
   return (
-    <TabsContext value={{ activeIndex, setActiveIndex }}>
-      <div className="tabs-container">
-        {Children.map(children, (child) =>
-          React.isValidElement(child) ? child : child
-        )}
-      </div>
-    </TabsContext>
+    <TabsContext.Provider value={{ activeIndex, setActiveIndex }}>
+      <div className="tabs-container">{children}</div>
+    </TabsContext.Provider>
   );
 };
 
-// Tab buttons 
-const TabList = ({ children }) => {
+// Container for tab buttons
+export const TabList = ({ children }) => {
   const { activeIndex, setActiveIndex } = useTabs();
 
   return (
@@ -27,39 +28,25 @@ const TabList = ({ children }) => {
         cloneElement(child, {
           isActive: index === activeIndex,
           onClick: () => setActiveIndex(index),
-          tabIndex: index === activeIndex ? 0 : -1
         })
       )}
     </div>
   );
 };
-TabList.displayName = "TabList";
 
-// Single tab
-const Tab = ({ children, isActive, onClick, tabIndex }) => {
-  return (
-    <button
-      className={`tab ${isActive ? "active" : ""}`}
-      onClick={onClick}
-      type="button"
-      tabIndex={tabIndex}
-    >
-      {children}
-    </button>
-  );
-};
+// Single tab button
+export const Tab = ({ children, isActive, onClick }) => (
+  <button className={`tab ${isActive ? "active" : ""}`} onClick={onClick}>
+    {children}
+  </button>
+);
 
-// Panel container 
-const TabPanels = ({ children }) => {
+// Container for tab panels
+export const TabPanels = ({ children }) => {
   const { activeIndex } = useTabs();
-  const panelsArray = Children.toArray(children);
-  return <div className="tab-panels">{panelsArray[activeIndex] || null}</div>;
-};
-TabPanels.displayName = "TabPanels";
-
-// Single panel
-const TabPanel = ({ children }) => {
-  return <div className="tab-panel">{children}</div>;
+  const childrenArray = Children.toArray(children); 
+  return <div className="tab-panels">{childrenArray[activeIndex]}</div>;
 };
 
-export { Tabs, TabList, Tab, TabPanels, TabPanel };
+// Single tab panel
+export const TabPanel = ({ children }) => <div className="tab-panel">{children}</div>;

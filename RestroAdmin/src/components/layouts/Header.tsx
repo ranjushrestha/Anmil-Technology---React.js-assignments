@@ -33,12 +33,11 @@ const Header: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
+ const handleLogout = () => {
+  localStorage.removeItem("authToken"); 
+  navigate("/login");
+};
 
-    navigate("/login");
-  };
 
   return (
     <header className="fixed top-0 left-0 w-screen h-16h-16 flex-shrink-0  bg-white shadow-sm px-6 py-3 flex items-center justify-between z-50">

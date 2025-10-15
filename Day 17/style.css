@@ -1,20 +1,44 @@
+:root {
+  /* Colors */
+  --text: #f4f4f4;
+  --text-inverse: #333;
+  --background: #e0e0e0;
+  --primary-color: black;
+  --secondary-color: #f0f0f0;
+
+  /* Spacing */
+  --spacing-small: 0.5em;
+  --spacing-medium: 1em;
+  --spacing-large: 2em;
+
+  /* Typography */
+  --font-family: "Poppins", sans-serif;
+  --font-size-small: 0.8rem;
+  --font-size-medium: 0.9rem;
+  --font-size-large: 2rem;
+
+  /* Animations */
+  --transition-fast: 150ms;
+  --transition-medium: 250ms;
+  --transition-slow: 800ms;
+  --ease-default: ease-in-out;
+  --translate-distance: 30px;
+}
+
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
   overflow-x: hidden;
 }
 
 .site-logo {
   font-weight: 900;
-  font-size: 0.8rem;
-  color: black;
+  font-size: var(--font-size-small);
+  color: var(--primary-color);
   text-decoration: none;
 }
 
 header {
-  --text: #f4f4f4;
-  --text-inverse: #333;
-  --background:#e0e0e0;;
   position: fixed;
   top: 0;
   left: 0;
@@ -23,10 +47,10 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2em 3em;
-  transition: background 250ms ease-in;
+  padding: var(--spacing-large) 3em;
+  transition: background var(--transition-medium) var(--ease-default);
   background: var(--background);
-  color: black;
+  color: var(--primary-color);
 }
 
 .nav__list {
@@ -37,7 +61,7 @@ header {
 }
 
 .nav__link {
-  --spacing: 1em;
+  --spacing: var(--spacing-medium);
   text-decoration: none;
   color: inherit;
   display: inline-block;
@@ -45,10 +69,10 @@ header {
   position: relative;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 0.9rem;
+  font-size: var(--font-size-medium);
 }
 
-.nav__link:after {
+.nav__link::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -56,27 +80,20 @@ header {
   right: var(--spacing);
   height: 2px;
   background: currentColor;
-  -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  transition: -webkit-transform 150ms ease-in-out;
-  transition: transform 150ms ease-in-out;
-  transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;
+  transition: transform var(--transition-fast) var(--ease-default);
 }
 
 .nav__link:hover::after {
-  -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
 
-
 .home-intro {
   padding: 50vh 0;
-
-  background-color: #f0f0f0;
-  color: black;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   text-align: center;
 }
-
 
 .home-about {
   padding: 4em 0;
@@ -94,8 +111,9 @@ header {
 
 .fade-in {
   opacity: 0;
-  transform: translateY(20px); 
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(var(--translate-distance));
+  transition: opacity var(--transition-slow) var(--ease-default),
+              transform var(--transition-slow) var(--ease-default);
 }
 
 .fade-in.appear {
@@ -103,22 +121,21 @@ header {
   transform: translateY(0);
 }
 
-
 .from-left {
   grid-column: 2 / 3;
-  transform: translateX(-30px); 
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateX(calc(-1 * var(--translate-distance)));
+  transition: opacity var(--transition-slow) var(--ease-default),
+              transform var(--transition-slow) var(--ease-default);
   opacity: 0;
 }
-
 
 .from-right {
   grid-column: 3 / 4;
-  transform: translateX(30px); 
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateX(var(--translate-distance));
+  transition: opacity var(--transition-slow) var(--ease-default),
+              transform var(--transition-slow) var(--ease-default);
   opacity: 0;
 }
-
 
 .from-left.appear,
 .from-right.appear {
@@ -126,16 +143,11 @@ header {
   opacity: 1;
 }
 
-
-
 .more-stuff-grid {
-  background: #f4f4f4;
+  background: var(--secondary-color);
   padding: 4em 0;
   display: grid;
   grid-gap: 2em;
   align-items: center;
-  grid-template-columns: minmax(1em, 1fr) repeat(2, minmax(200px, 400px)) minmax(
-      1em,
-      1fr
-    );
+  grid-template-columns: minmax(1em, 1fr) repeat(2, minmax(200px, 400px)) minmax(1em, 1fr);
 }

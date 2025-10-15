@@ -1,4 +1,3 @@
-// Login.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/UseLoginForm";
@@ -12,41 +11,40 @@ interface LoginFormData {
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
-const { formData, errors, handleChange, handleSubmit } = useForm<LoginFormData>({
-  defaultValues: {
-    username: "",
-    email: "",
-    password: "",
-  },
-  validations: {
-    username: {
-      required: true,
-      validate: (value: string) => ({
-        requirement: /^[a-zA-Z]{4,}$/.test(value),
-        message: "Username must be at least 4 letters only",
-      }),
+  const { formData, errors, handleChange, handleSubmit } = useForm<LoginFormData>({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
     },
-    email: {
-      required: true,
-      validate: (value: string) => ({
-        requirement: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-        message: "Invalid email address",
-      }),
+    validations: {
+      username: {
+        required: true,
+        validate: (value: string) => ({
+          requirement: /^[a-zA-Z]{4,}$/.test(value),
+          message: "Username must be at least 4 letters",
+        }),
+      },
+      email: {
+        required: true,
+        validate: (value: string) => ({
+          requirement: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+          message: "Invalid email address",
+        }),
+      },
+      password: {
+        required: true,
+        validate: (value: string) => ({
+          requirement: /^.{8,}$/.test(value),
+          message: "Password must be at least 8 characters",
+        }),
+      },
     },
-    password: {
-      required: true,
-      validate: (value: string) => ({
-        requirement: /^.{8,}$/.test(value),
-        message: "Password must be at least 8 characters",
-      }),
-    },
-  },
-});
-
+  });
 
   const onSubmit = (data: LoginFormData) => {
     console.log("Form Submitted:", data);
-    localStorage.setItem("authToken", "bareerauthToken");
+    localStorage.setItem("authToken", "bareer-auth-token");
     navigate("/dashboard");
   };
 
@@ -73,7 +71,9 @@ const { formData, errors, handleChange, handleSubmit } = useForm<LoginFormData>(
                   : "border-gray-300 focus:ring-green-200"
               }`}
             />
-            {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -93,7 +93,9 @@ const { formData, errors, handleChange, handleSubmit } = useForm<LoginFormData>(
                   : "border-gray-300 focus:ring-green-200"
               }`}
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Password */}
@@ -113,7 +115,9 @@ const { formData, errors, handleChange, handleSubmit } = useForm<LoginFormData>(
                   : "border-gray-300 focus:ring-green-200"
               }`}
             />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           {/* Submit Button */}

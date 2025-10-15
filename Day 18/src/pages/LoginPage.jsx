@@ -1,10 +1,9 @@
-import  { useState } from "react";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import "../App.css";
 
 const LoginPage = () => {
-  const [redirect, setRedirect] = useState(false); 
+  const navigate = useNavigate(); 
 
   const { formData, errors, handleChange, handleSubmit } = useForm({
     defaultValues: {
@@ -37,16 +36,11 @@ const LoginPage = () => {
     },
   });
 
-
+  
   const onSubmit = (data) => {
     localStorage.setItem("token", "12345");
-    setRedirect(true); 
+    navigate("/"); 
   };
-
-
-  if (redirect) {
-    return <Navigate to="/" replace />;
-  }
 
   return (
     <div className="login-container">
